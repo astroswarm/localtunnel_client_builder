@@ -1,0 +1,24 @@
+#!/usr/bin/env sh
+set -e
+
+ARCH=`uname -m`
+NODE_ARCH=$ARCH
+if [ $ARCH = "x86_64" ]; then
+  NODE_ARCH=x64
+else
+  NODE_ARCH=$ARCH
+fi
+
+echo "Detected architecture: $ARCH."
+docker build \
+  --build-arg ARCH=$ARCH \
+  --build-arg NODE_ARCH=$NODE_ARCH \
+  --tag astroswarm/localtunnel_client-$ARCH:latest \
+ ./
+
+echo "Would you like to release this image now (y/n)?"
+read release
+if [ $release = "y" ]; then
+  echo "Pushing to AstroSwarm registry."
+  docker push astroswarm/localtunnel_client-$ARCH:latest
+fi
