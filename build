@@ -2,6 +2,7 @@
 set -e
 
 ARCH=`uname -m`
+
 NODE_ARCH=$ARCH
 if [ $ARCH = "x86_64" ]; then
   NODE_ARCH=x64
@@ -9,10 +10,18 @@ else
   NODE_ARCH=$ARCH
 fi
 
+SHELL2HTTP_ARCH=$ARCH
+if [ $ARCH = "x86_64" ]; then
+  SHELL2HTTP_ARCH=amd64
+elif [ $ARCH = "armv7l" ]; then
+  SHELL2HTTP_ARCH=arm64
+fi
+
 echo "Detected architecture: $ARCH."
 docker build \
   --build-arg ARCH=$ARCH \
   --build-arg NODE_ARCH=$NODE_ARCH \
+  --build-arg SHELL2HTTP_ARCH=$SHELL2HTTP_ARCH \
   --tag astroswarm/localtunnel_client-$ARCH:latest \
  ./
 
