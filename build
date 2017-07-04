@@ -14,7 +14,7 @@ SHELL2HTTP_ARCH=$ARCH
 if [ $ARCH = "x86_64" ]; then
   SHELL2HTTP_ARCH=amd64
 elif [ $ARCH = "armv7l" ]; then
-  SHELL2HTTP_ARCH=arm64
+  SHELL2HTTP_ARCH=arm
 fi
 
 echo "Detected architecture: $ARCH."
